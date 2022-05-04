@@ -19,8 +19,7 @@ class Move
   end
 
   def self.finished?
-    check_column_one || check_column_two || check_column_three ||
-    check_row_one || check_row_two || check_row_three
+    check_columns || check_rows || check_diagonals
   end
 
   def self.new_turn
@@ -28,6 +27,18 @@ class Move
     move = gets.chomp
     Move.new(@@current_player, move)
     @@current_player = @@current_player == 'X' ? 'O' : 'X'
+  end
+
+  def self.check_columns
+    check_column_one || check_column_two || check_column_three
+  end
+
+  def self.check_rows
+    check_row_one || check_row_two || check_row_three
+  end
+
+  def self.check_diagonals
+    check_diagonal_one || check_diagonal_two
   end
 
   def self.check_column_one
@@ -84,6 +95,26 @@ class Move
     if @@board[6] != ' ' &&
        @@board[7] == @@board[6] &&
        @@board[8] == @@board[7]
+      return true
+    end
+
+    false
+  end
+
+  def self.check_diagonal_one
+    if @@board[0] != ' ' &&
+       @@board[4] == @@board[0] &&
+       @@board[8] == @@board[4]
+      return true
+    end
+
+    false
+  end
+
+  def self.check_diagonal_two
+    if @@board[2] != ' ' &&
+       @@board[4] == @@board[2] &&
+       @@board[6] == @@board[4]
       return true
     end
 
