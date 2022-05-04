@@ -1,6 +1,6 @@
 class Move
   @@board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
-  @@current_player = 'X'
+  @@current_player = 'O'
 
   def self.show_board
     system 'clear'
@@ -19,14 +19,17 @@ class Move
   end
 
   def self.finished?
-    check_columns || check_rows || check_diagonals
+    return false unless check_columns || check_rows || check_diagonals
+
+    puts "Game Over! Player #{@@current_player} has won!"
+    true
   end
 
   def self.new_turn
+    @@current_player = @@current_player == 'X' ? 'O' : 'X'
     puts "Player #{@@current_player}'s turn. Please enter your move: "
     move = gets.chomp
     Move.new(@@current_player, move)
-    @@current_player = @@current_player == 'X' ? 'O' : 'X'
   end
 
   def self.check_columns
