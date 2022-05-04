@@ -1,5 +1,6 @@
 class Move
   @@board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+  @@current_player = 'X'
 
   def initialize(player, move)
     @player = player
@@ -21,6 +22,13 @@ class Move
     false
   end
 
+  def self.new_turn
+    puts "Player #{@@current_player}'s turn. Please enter your move: "
+    move = gets.chomp
+    Move.new(@@current_player, move)
+    @@current_player = @@current_player == 'X' ? 'O' : 'X'
+  end
+
   private
 
   attr_reader :player, :move
@@ -30,10 +38,4 @@ class Move
   end
 end
 
-current_player = 'X'
-until Move.finished?
-  puts "Player #{current_player}'s turn. Please enter your move: "
-  move = gets.chomp
-  Move.new(current_player, move)
-  current_player = current_player == 'X' ? 'O' : 'X'
-end
+Move.new_turn until Move.finished?
