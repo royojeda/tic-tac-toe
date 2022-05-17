@@ -19,9 +19,13 @@ class Move
   end
 
   def self.finished?
-    return false unless check_columns || check_rows || check_diagonals
+    return false unless check_columns || check_rows || check_diagonals || !@@board.include?(' ')
 
-    puts "Game Over! Player #{@@current_player} has won!"
+    if @@board.include?(' ')
+      puts "Game Over! Player #{@@current_player} has won!"
+    else
+      puts 'Game Over! The game is a draw.'
+    end
     true
   end
 
