@@ -9,7 +9,7 @@ class Board
     spaces[move - 1] != ' '
   end
 
-  def record(player)
+  def update(player)
     spaces[player.move - 1] = player.mark
   end
 

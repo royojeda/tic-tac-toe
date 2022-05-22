@@ -16,18 +16,15 @@ class Game
   attr_accessor :players
 
   def turn
-    system 'clear'
-    valid_move = take_move
-    current_player.update_move(valid_move)
-    board.record(current_player)
+    current_player.make_move
+    board.update(current_player) if valid?(current_player.move)
     players.rotate!
     @current_player = players[0]
   end
 
-  def take_move
-    player_input = prompt_input
-    if value_valid?(player_input)
-      return player_input unless board.taken?(player_input)
+  def valid?(input)
+    if accepted_value?(input)
+      return input unless board.taken?(input)
 
       system 'clear'
       puts 'That space is taken. Please enter a different move.'
@@ -35,16 +32,11 @@ class Game
       system 'clear'
       puts 'Invalid move. Please enter a number between 1 and 9 (inclusive).'
     end
-    take_move
+    turn
   end
 
-  def prompt_input
-    puts "Player #{current_player.mark}'s turn. Please enter your move: "
-    gets.chomp.to_i
-  end
-
-  def value_valid?(input)
-    input.between?(1, 9)
+  def accepted_value?(value)
+    value.between?(1, 9)
   end
 
   def over?
