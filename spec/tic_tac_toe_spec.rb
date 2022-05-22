@@ -32,6 +32,26 @@ end
 require './lib/board'
 
 describe Board do
+  describe '#taken?' do
+    subject(:taken_board) do
+      described_class.new([' ', ' ', ' ', 'X', ' ', ' ', ' ', ' ', ' '])
+    end
+
+    context 'when the space is taken' do
+      it 'returns true' do
+        space = 4
+        expect(taken_board.taken?(space)).to be true
+      end
+    end
+
+    context 'when the space is not taken' do
+      it 'returns false' do
+        space = 3
+        expect(taken_board.taken?(space)).to be false
+      end
+    end
+  end
+
   describe '#full?' do
     context 'when the board is empty' do
       subject(:empty_board) do
