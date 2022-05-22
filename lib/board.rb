@@ -19,7 +19,7 @@ class Board
   end
 
   def three_in_a_row?
-    columns?
+    columns? || rows?
   end
 
   def columns?
@@ -36,5 +36,21 @@ class Board
 
   def right_column?
     spaces[2] != ' ' && spaces[2] == spaces[5] && spaces[5] == spaces[8]
+  end
+
+  def rows?
+    top_row? || middle_row? || bottom_row?
+  end
+
+  def top_row?
+    spaces[0] != ' ' && spaces[0] == spaces[1] && spaces[1] == spaces[2]
+  end
+
+  def middle_row?
+    spaces[3] != ' ' && spaces[3] == spaces[4] && spaces[4] == spaces[5]
+  end
+
+  def bottom_row?
+    spaces[6] != ' ' && spaces[6] == spaces[7] && spaces[7] == spaces[8]
   end
 end
