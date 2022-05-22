@@ -52,6 +52,19 @@ describe Board do
     end
   end
 
+  describe '#update' do
+    let(:test_player) { double('Player', mark: 'X', move: 5) }
+    subject(:game_board) { described_class.new }
+
+    it "writes Player mark to @spaces where Player move specifies" do
+      expect { game_board.update(test_player) }.to change { game_board.spaces[test_player.move - 1] }.to(test_player.mark)
+    end
+
+    it "does not change other elements of @spaces" do
+      expect { game_board.update(test_player) }.not_to change { game_board.spaces[test_player.move] }
+    end
+  end
+
   describe '#full?' do
     context 'when the board is empty' do
       subject(:empty_board) do
