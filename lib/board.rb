@@ -21,6 +21,7 @@ class Board
     columns? || rows? || diagonals?
   end
 
+  # rubocop:disable Metrics/AbcSize
   def status
     puts <<~TEXT
        #{spaces[0]} | #{spaces[1]} | #{spaces[2]}
@@ -31,6 +32,7 @@ class Board
 
     TEXT
   end
+  # rubocop:enable Metrics/AbcSize
 
   private
 
