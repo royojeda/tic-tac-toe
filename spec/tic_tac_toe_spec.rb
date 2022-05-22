@@ -28,3 +28,39 @@ describe Player do
     end
   end
 end
+
+require './lib/board'
+
+describe Board do
+  describe '#full?' do
+    context 'when the board is empty' do
+      subject(:empty_board) do
+        described_class.new([' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '])
+      end
+
+      it 'returns false' do
+        expect(empty_board.full?).to be false
+      end
+    end
+
+    context 'when the board is full' do
+      subject(:full_board) do
+        described_class.new(['X', 'X', 'O', 'X', 'O', 'O', 'O', 'X', 'x'])
+      end
+
+      it 'returns true' do
+        expect(full_board.full?).to be true
+      end
+    end
+
+    context 'when the board is partially filled' do
+      subject(:ongoing_board) do
+        described_class.new(['X', ' ', 'O', 'X', 'O', ' ', 'O', 'X', ' '])
+      end
+
+      it 'returns false' do
+        expect(ongoing_board.full?).to be false
+      end
+    end
+  end
+end

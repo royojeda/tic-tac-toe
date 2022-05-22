@@ -1,8 +1,8 @@
 class Board
   attr_reader :spaces
 
-  def initialize
-    @spaces = Array.new(9, ' ')
+  def initialize(spaces = Array.new(9, ' '))
+    @spaces = spaces
   end
 
   def taken?(move)
