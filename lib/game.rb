@@ -3,6 +3,7 @@ class Game
     @players = [Player.new('X'), Player.new('O')]
     @current_player = players[0]
     @board = Board.new
+    @error = nil
   end
 
   def play
@@ -12,27 +13,43 @@ class Game
 
   private
 
-  attr_reader :current_player, :board
-  attr_accessor :players
+  attr_reader :board
+  attr_accessor :players, :current_player, :error
 
   def turn
-    current_player.make_move
-    board.update(current_player) if valid?(current_player.move)
+    valid_move
+    board.update(current_player)
     players.rotate!
-    @current_player = players[0]
+    self.current_player = players[0]
+  end
+
+  def valid_move
+    loop do
+      display
+      current_player.make_move
+
+      if valid?(current_player.move)
+        self.error = nil
+        break
+      end
+    end
+  end
+
+  def display
+    system 'clear'
+    puts error
+    board.status
   end
 
   def valid?(input)
     if accepted_value?(input)
-      return input unless board.taken?(input)
+      return true unless board.taken?(input)
 
-      system 'clear'
-      puts 'That space is taken. Please enter a different move.'
+      self.error = 'That space is taken. Please enter a different move.'
     else
-      system 'clear'
-      puts 'Invalid move. Please enter a number between 1 and 9 (inclusive).'
+      self.error = 'Invalid move. Please enter a number between 1 and 9 (inclusive).'
     end
-    turn
+    false
   end
 
   def accepted_value?(value)
@@ -44,7 +61,8 @@ class Game
   end
 
   def show_result
-    if board.full?
+    display
+    if board.full? && !board.three_in_a_row?
       puts "GAME OVER! It's a draw."
     else
       winning_player = players[1]

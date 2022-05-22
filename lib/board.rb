@@ -21,6 +21,17 @@ class Board
     columns? || rows? || diagonals?
   end
 
+  def status
+    puts <<~TEXT
+       #{spaces[0]} | #{spaces[1]} | #{spaces[2]}
+      ---|---|---
+       #{spaces[3]} | #{spaces[4]} | #{spaces[5]}
+      ---|---|---
+       #{spaces[6]} | #{spaces[7]} | #{spaces[8]}
+
+    TEXT
+  end
+
   private
 
   def columns?
