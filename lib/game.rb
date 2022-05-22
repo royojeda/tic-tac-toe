@@ -50,6 +50,11 @@ class Game
   end
 
   def show_result
-    puts "GAME OVER! It's a draw." if board.full?
+    if board.full?
+      puts "GAME OVER! It's a draw."
+    else
+      winning_player = players[1]
+      puts "GAME OVER! Player #{winning_player.mark} has won!"
+    end
   end
 end
