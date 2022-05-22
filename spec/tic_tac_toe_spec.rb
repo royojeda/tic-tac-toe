@@ -3,14 +3,27 @@ require './lib/player'
 describe Player do
   describe '#make_move' do
     subject(:player_move) { described_class.new('X') }
-    context 'when given a valid input' do
+
+    context 'when given an integer input' do
       before do
-        valid_input = '7'
-        allow(player_move).to receive(:gets).and_return(valid_input)
+        input = '7'
+        allow(player_move).to receive(:puts)
+        allow(player_move).to receive(:gets).and_return(input)
       end
 
-      it 'writes thte integer value of the input to @move' do
+      it 'writes the integer value of the input to @move' do
         expect { player_move.make_move }.to change { player_move.instance_variable_get(:@move) }.to(7)
+      end
+    end
+    context 'when given a non-integer input' do
+      before do
+        input = 'd'
+        allow(player_move).to receive(:puts)
+        allow(player_move).to receive(:gets).and_return(input)
+      end
+
+      it 'writes the integer 0 to @move' do
+        expect { player_move.make_move }.to change { player_move.instance_variable_get(:@move) }.to(0)
       end
     end
   end
