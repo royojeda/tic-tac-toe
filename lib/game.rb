@@ -1,7 +1,4 @@
 class Game
-  attr_reader :current_player, :board
-  attr_accessor :move, :players
-
   def initialize
     @players = [Player.new('X'), Player.new('O')]
     @current_player = players[0]
@@ -12,6 +9,11 @@ class Game
     turn until over?
     show_result
   end
+
+  private
+
+  attr_reader :current_player, :board
+  attr_accessor :players
 
   def turn
     system 'clear'

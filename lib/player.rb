@@ -3,6 +3,7 @@ class Player
 
   def initialize(mark)
     @mark = mark
+    @move = nil
   end
 
   def update_move(player_input)

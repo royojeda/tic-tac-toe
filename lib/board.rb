@@ -11,7 +11,6 @@ class Board
 
   def record(player)
     spaces[player.move - 1] = player.mark
-    p spaces
   end
 
   def full?
@@ -21,6 +20,8 @@ class Board
   def three_in_a_row?
     columns? || rows? || diagonals?
   end
+
+  private
 
   def columns?
     left_column? || middle_column? || right_column?
