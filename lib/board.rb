@@ -19,7 +19,7 @@ class Board
   end
 
   def three_in_a_row?
-    columns? || rows?
+    columns? || rows? || diagonals?
   end
 
   def columns?
@@ -52,5 +52,17 @@ class Board
 
   def bottom_row?
     spaces[6] != ' ' && spaces[6] == spaces[7] && spaces[7] == spaces[8]
+  end
+
+  def diagonals?
+    downward_diagonal? || upward_diagonal?
+  end
+
+  def downward_diagonal?
+    spaces[0] != ' ' && spaces[0] == spaces[4] && spaces[4] == spaces[8]
+  end
+
+  def upward_diagonal?
+    spaces[6] != ' ' && spaces[6] == spaces[4] && spaces[4] == spaces[2]
   end
 end
