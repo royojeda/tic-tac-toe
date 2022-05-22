@@ -13,4 +13,8 @@ class Board
     spaces[player.move - 1] = player.mark
     p spaces
   end
+
+  def full?
+    spaces.none?(' ')
+  end
 end

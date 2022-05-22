@@ -2,4 +2,4 @@ require './lib/game'
 require './lib/player'
 require './lib/board'
 
-Game.new.start
+Game.new.play

@@ -8,11 +8,12 @@ class Game
     @board = Board.new
   end
 
-  def start
-    play_turn until over?
+  def play
+    turn until over?
+    show_result
   end
 
-  def play_turn
+  def turn
     valid_move = take_move
     current_player.update_move(valid_move)
     board.record(current_player)
@@ -21,32 +22,33 @@ class Game
   end
 
   def take_move
-    loop do
-      player_input = prompt_input
-      if value_valid?(player_input)
-        integer_input = player_input.to_i
-        return integer_input unless board.taken?(integer_input)
+    player_input = prompt_input
+    if value_valid?(player_input)
+      return player_input unless board.taken?(player_input)
 
-        system 'clear'
-        puts 'That space is taken. Please enter a different move.'
-        next
-      else
-        system 'clear'
-        puts 'Invalid move. Please enter a number between 1 and 9 (inclusive).'
-      end
+      system 'clear'
+      puts 'That space is taken. Please enter a different move.'
+    else
+      system 'clear'
+      puts 'Invalid move. Please enter a number between 1 and 9 (inclusive).'
     end
+    take_move
   end
 
   def value_valid?(input)
-    input.match?(/^[1-9]$/)
+    input.between?(1, 9)
   end
 
   def prompt_input
     puts "Player #{current_player}'s turn. Please enter your move: "
-    gets.chomp
+    gets.chomp.to_i
   end
 
   def over?
-    board.spaces.none?(' ')
+    board.full?
+  end
+
+  def show_result
+    puts "GAME OVER! It's a draw." if board.full?
   end
 end
