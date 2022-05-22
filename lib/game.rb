@@ -14,6 +14,7 @@ class Game
   end
 
   def turn
+    system 'clear'
     valid_move = take_move
     current_player.update_move(valid_move)
     board.record(current_player)
@@ -35,17 +36,17 @@ class Game
     take_move
   end
 
+  def prompt_input
+    puts "Player #{current_player.mark}'s turn. Please enter your move: "
+    gets.chomp.to_i
+  end
+
   def value_valid?(input)
     input.between?(1, 9)
   end
 
-  def prompt_input
-    puts "Player #{current_player}'s turn. Please enter your move: "
-    gets.chomp.to_i
-  end
-
   def over?
-    board.full?
+    board.full? || board.three_in_a_row?
   end
 
   def show_result
