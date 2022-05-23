@@ -31,15 +31,6 @@ class Game
     false
   end
 
-  def over?
-    board.full? || board.three_in_a_row?
-  end
-
-  private
-
-  attr_reader :board
-  attr_accessor :players, :current_player
-
   def valid_move
     loop do
       display
@@ -51,6 +42,15 @@ class Game
       end
     end
   end
+
+  def over?
+    board.full? || board.three_in_a_row?
+  end
+
+  private
+
+  attr_reader :board
+  attr_accessor :players, :current_player
 
   def display
     system 'clear'

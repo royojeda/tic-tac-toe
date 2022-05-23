@@ -119,4 +119,49 @@ describe Game do
       end
     end
   end
+
+  describe '#valid_move' do
+    subject(:test_game) { described_class.new(player_one: test_player) }
+
+    let(:test_player) { double('Player') }
+
+    before do
+      allow(test_game).to receive(:display)
+      allow(test_player).to receive(:make_move)
+      allow(test_player).to receive(:move)
+    end
+
+    context 'when move valid' do
+      before do
+        allow(test_game).to receive(:valid?).and_return(true)
+      end
+
+      it 'sends Player#make_move once' do
+        test_game.valid_move
+        expect(test_player).to have_received(:make_move).once
+      end
+    end
+
+    context 'when move is invalid once' do
+      before do
+        allow(test_game).to receive(:valid?).and_return(false, true)
+      end
+
+      it 'sends Player#make_move twice' do
+        test_game.valid_move
+        expect(test_player).to have_received(:make_move).twice
+      end
+    end
+
+    context 'when move is invalid 5 times' do
+      before do
+        allow(test_game).to receive(:valid?).and_return(false, false, false, false, false, true)
+      end
+
+      it 'sends Player#make_move 5 times' do
+        test_game.valid_move
+        expect(test_player).to have_received(:make_move).exactly(6).times
+      end
+    end
+  end
 end
