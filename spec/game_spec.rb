@@ -41,4 +41,25 @@ describe Game do
       end
     end
   end
+
+  describe '#over?' do
+    let(:test_board) { instance_double(Board) }
+
+    subject(:test_game) { described_class.new(test_board) }
+
+    before do
+      allow(test_board).to receive(:full?)
+      allow(test_board).to receive(:three_in_a_row?)
+    end
+
+    it 'sends Board#full?' do
+      expect(test_board).to receive(:full?)
+      test_game.over?
+    end
+
+    it 'sends Board#three_in_a_row?' do
+      expect(test_board).to receive(:three_in_a_row?)
+      test_game.over?
+    end
+  end
 end

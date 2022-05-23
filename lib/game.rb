@@ -1,14 +1,18 @@
 class Game
-  def initialize
+  def initialize(board = Board.new)
     @players = [Player.new('X'), Player.new('O')]
     @current_player = players[0]
-    @board = Board.new
+    @board = board
     @error = nil
   end
 
   def play
     turn until over?
     show_result
+  end
+
+  def over?
+    board.full? || board.three_in_a_row?
   end
 
   private
@@ -54,10 +58,6 @@ class Game
 
   def accepted_value?(value)
     value.between?(1, 9)
-  end
-
-  def over?
-    board.full? || board.three_in_a_row?
   end
 
   def show_result
