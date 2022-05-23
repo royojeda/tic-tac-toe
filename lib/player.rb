@@ -1,7 +1,7 @@
 class Player
   attr_reader :mark, :move
 
-  def initialize(mark, move = nil)
+  def initialize(mark, move: nil)
     @mark = mark
     @move = move
   end

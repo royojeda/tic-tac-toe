@@ -1,14 +1,34 @@
 class Game
-  def initialize(board = Board.new)
-    @players = [Player.new('X'), Player.new('O')]
-    @current_player = players[0]
+  attr_accessor :error
+
+  def initialize(board: Board.new, player_one: Player.new('X'), player_two: Player.new('O'), error: nil)
     @board = board
-    @error = nil
+    @players = [player_one, player_two]
+    @current_player = players[0]
+    @error = error
   end
 
   def play
     turn until over?
     show_result
+  end
+
+  def turn
+    valid_move
+    board.update(current_player)
+    players.rotate!
+    self.current_player = players[0]
+  end
+
+  def valid?(input)
+    if accepted_value?(input)
+      return true unless board.taken?(input)
+
+      self.error = 'That space is taken. Please enter a different move.'
+    else
+      self.error = 'Invalid move. Please enter a number between 1 and 9 (inclusive).'
+    end
+    false
   end
 
   def over?
@@ -18,14 +38,7 @@ class Game
   private
 
   attr_reader :board
-  attr_accessor :players, :current_player, :error
-
-  def turn
-    valid_move
-    board.update(current_player)
-    players.rotate!
-    self.current_player = players[0]
-  end
+  attr_accessor :players, :current_player
 
   def valid_move
     loop do
@@ -43,17 +56,6 @@ class Game
     system 'clear'
     puts error
     board.status
-  end
-
-  def valid?(input)
-    if accepted_value?(input)
-      return true unless board.taken?(input)
-
-      self.error = 'That space is taken. Please enter a different move.'
-    else
-      self.error = 'Invalid move. Please enter a number between 1 and 9 (inclusive).'
-    end
-    false
   end
 
   def accepted_value?(value)
